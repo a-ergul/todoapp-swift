@@ -28,18 +28,10 @@ struct LoginView: View {
                     SecureField("Password", text: $viewModel.password)
                 }
                 .frame(height: 150)
-                Button(action: {
+                
+                BigButton(title: "Let's Go") {
                     viewModel.login()
-                }, label: {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 15)
-                            .foregroundColor(.orange)
-                        Text("Submit")
-                            .foregroundStyle(.white)
-                            .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                            
-                    }
-                })
+                }
                 .frame(height: 75)
                 .padding(.horizontal)
                 // Footer - Sign Up
