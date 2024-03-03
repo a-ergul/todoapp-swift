@@ -8,8 +8,23 @@
 import SwiftUI
 
 struct NewItemView: View {
+    
+    @StateObject var viewModel = NewItemViewViewModel()
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack{
+            Text("Yeni Görev")
+                .font(.title)
+                .bold()
+                .padding(.top, 100)
+            Form{
+                TextField("Başlık", text: $viewModel.title )
+                DatePicker("Bitiş Tarihi", selection: $viewModel.dueDate)
+                    .datePickerStyle(GraphicalDatePickerStyle())
+                BigButton(title: "Kaydet") {
+                    viewModel.save()
+                }
+            }
+        }
     }
 }
 
