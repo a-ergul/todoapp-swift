@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct NewItemView: View {
-    
+    @Binding var newItemPresented : Bool
     @StateObject var viewModel = NewItemViewViewModel()
     var body: some View {
         VStack{
@@ -21,13 +21,26 @@ struct NewItemView: View {
                 DatePicker("Bitiş Tarihi", selection: $viewModel.dueDate)
                     .datePickerStyle(GraphicalDatePickerStyle())
                 BigButton(title: "Kaydet") {
-                    viewModel.save()
+                    if viewModel.canSave {
+                        viewModel.save()
+                        newItemPresented = false
+                    } else {
+                        viewModel.showAlert = true
+                    }
+
                 }
             }
+            .alert(isPresented: $viewModel.showAlert, content: {
+                Alert(title: Text("Hata"), message: Text("Tekrar gözden geçir"))
+            })
         }
     }
 }
 
 #Preview {
-    NewItemView()
+    NewItemView(newItemPresented: Binding(get: {
+        return true
+    }, set: {
+        _ in
+    }))
 }
